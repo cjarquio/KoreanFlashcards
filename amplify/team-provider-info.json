@@ -1,15 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-koreanflashcards-dev-ba7e8-authRole",
-      "UnauthRoleArn": "arn:aws:iam::474668425858:role/amplify-koreanflashcards-dev-ba7e8-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::474668425858:role/amplify-koreanflashcards-dev-ba7e8-authRole",
+      "AuthRoleName": "amplify-koreanflashcards-dev-c1dc8-authRole",
+      "UnauthRoleArn": "arn:aws:iam::474668425858:role/amplify-koreanflashcards-dev-c1dc8-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::474668425858:role/amplify-koreanflashcards-dev-c1dc8-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-koreanflashcards-dev-ba7e8-deployment",
-      "UnauthRoleName": "amplify-koreanflashcards-dev-ba7e8-unauthRole",
-      "StackName": "amplify-koreanflashcards-dev-ba7e8",
-      "StackId": "arn:aws:cloudformation:us-west-2:474668425858:stack/amplify-koreanflashcards-dev-ba7e8/bba22b30-26ec-11f0-a39d-02a1aa2da885",
-      "AmplifyAppId": "d28i8a23zj7x0x"
+      "DeploymentBucketName": "amplify-koreanflashcards-dev-c1dc8-deployment",
+      "UnauthRoleName": "amplify-koreanflashcards-dev-c1dc8-unauthRole",
+      "StackName": "amplify-koreanflashcards-dev-c1dc8",
+      "StackId": "arn:aws:cloudformation:us-west-2:474668425858:stack/amplify-koreanflashcards-dev-c1dc8/c20e4b60-27a1-11f0-9e91-026f89a7fc89",
+      "AmplifyAppId": "d1dxj9gkwo3f5s"
     }
   }
 }
