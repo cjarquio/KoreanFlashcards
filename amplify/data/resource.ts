@@ -10,8 +10,16 @@ const schema = a.schema({
   Todo: a
     .model({
       content: a.string(),
+      isDone: a.boolean()
     })
-    .authorization((allow) => [allow.guest()]),
+    .authorization((allow) => [allow.guest(), allow.owner()]),
+  // Translations: a
+  //   .model({
+  //     korean: a.string(),
+  //     english: a.string(),
+  //     symbol: a.string(),
+  //   })
+  //   .authorization((allow) => [allow.guest()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -19,7 +27,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'identityPool',
+    defaultAuthorizationMode: 'userPool',
   },
 });
 
