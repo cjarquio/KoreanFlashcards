@@ -18,6 +18,7 @@ const SignOutButton = () => {
   );
 };
 
+// Amplify 6 has Authenticator that incompatible with current version of Expo Go.
 const App = () => {
   return (
     <Authenticator.Provider>
