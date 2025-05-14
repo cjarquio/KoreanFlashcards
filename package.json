@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "start:android": "npx react-native start"
   },
   "dependencies": {
     "@aws-amplify/react-native": "^1.1.9",
@@ -26,6 +27,7 @@
     "@aws-amplify/backend": "^1.16.0",
     "@aws-amplify/backend-cli": "^1.7.0",
     "@babel/core": "^7.25.2",
+    "@react-native-community/cli": "latest",
     "@types/react": "~19.0.10",
     "aws-cdk-lib": "^2.189.1",
     "constructs": "^10.4.2",

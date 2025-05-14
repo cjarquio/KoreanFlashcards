@@ -1,35 +1,20 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { schema as generatedSqlSchema } from './schema.sql';
 
-/*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any unauthenticated user can "create", "read", "update", 
-and "delete" any "Todo" records.
-=========================================================================*/
-const schema = a.schema({
-  Todo: a
-    .model({
-      content: a.string(),
-      isDone: a.boolean()
-    })
-    .authorization((allow) => [allow.guest(), allow.owner()]),
-  // Translations: a
-  //   .model({
-  //     korean: a.string(),
-  //     english: a.string(),
-  //     symbol: a.string(),
-  //   })
-  //   .authorization((allow) => [allow.guest()]),
-});
 
-export type Schema = ClientSchema<typeof schema>;
+// Add a global authorization rule
+const sqlSchema = generatedSqlSchema.authorization(allow => allow.guest())
+
+
+export type Schema = ClientSchema<typeof sqlSchema>;
 
 export const data = defineData({
-  schema,
+  schema: sqlSchema,
   authorizationModes: {
     defaultAuthorizationMode: 'userPool',
   },
 });
+
 
 /*== STEP 2 ===============================================================
 Go to your frontend source code. From your client-side code, generate a
