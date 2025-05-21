@@ -14,6 +14,7 @@
     "@aws-amplify/ui-react-native": "^2.5.2",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-community/netinfo": "^11.4.1",
+    "@tamagui/config": "^1.126.13",
     "aws-amplify": "^6.14.4",
     "expo": "~53.0.5",
     "expo-status-bar": "~2.2.3",
@@ -21,7 +22,8 @@
     "react-native": "0.79.2",
     "react-native-get-random-values": "^1.11.0",
     "react-native-safe-area-context": "5.4.0",
-    "react-native-url-polyfill": "^2.0.0"
+    "react-native-url-polyfill": "^2.0.0",
+    "tamagui": "^1.126.13"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.16.0",
