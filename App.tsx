@@ -51,16 +51,22 @@ const App = () => {
   console.log('taekwondoTranslations', taekwondoTranslations)
 
   return (
-    <Authenticator.Provider>
-      <Authenticator>
-        <TamaguiProvider config={config}>
+    // <Authenticator.Provider>
+    //   <Authenticator>
+    //     <TamaguiProvider config={config}>
+    //       <View style={styles.container}>
+    //         <FlashCard koreanPhonetic={taekwondoTranslations?.[0]?.korean} english={taekwondoTranslations?.[0]?.english} />
+    //         <SignOutButton />
+    //       </View>
+    //     </TamaguiProvider>
+    //   </Authenticator>
+    // </Authenticator.Provider>
+    <TamaguiProvider config={config}>
           <View style={styles.container}>
             <FlashCard koreanPhonetic={taekwondoTranslations?.[0]?.korean} english={taekwondoTranslations?.[0]?.english} />
             <SignOutButton />
           </View>
         </TamaguiProvider>
-      </Authenticator>
-    </Authenticator.Provider>
   );
 };
 
