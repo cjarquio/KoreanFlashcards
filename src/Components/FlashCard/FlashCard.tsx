@@ -1,4 +1,4 @@
-import { Card, SizableText, YStack } from 'tamagui';
+import { Card, Text, YStack } from 'tamagui';
 import { StyleSheet } from 'react-native';
 
 interface FlashCardProps {
@@ -10,9 +10,9 @@ export const FlashCard: React.FC<FlashCardProps> = (props: FlashCardProps) => {
   const { koreanPhonetic, english } = props;
   return (
     <Card style={styles.flashCard}>
-      <YStack>
-        <SizableText fontSize="$12">{koreanPhonetic}</SizableText>
-        <SizableText fontSize="$12">{english}</SizableText>
+      <YStack style={styles.flashCardTextContainer}>
+        <Text fontSize="$12">{koreanPhonetic}</Text>
+        <Text fontSize="$12">{english}</Text>
       </YStack>
     </Card>
   );
@@ -20,8 +20,15 @@ export const FlashCard: React.FC<FlashCardProps> = (props: FlashCardProps) => {
 
 const styles = StyleSheet.create({
   flashCard: {
-    width: 200,
-    height: 200,
+    width: '80%',
+    height: '80%',
+  },
+  flashCardTextContainer: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
 });
 

@@ -64,7 +64,6 @@ const App = () => {
     <TamaguiProvider config={config}>
           <View style={styles.container}>
             <FlashCard koreanPhonetic={taekwondoTranslations?.[0]?.korean} english={taekwondoTranslations?.[0]?.english} />
-            <SignOutButton />
           </View>
         </TamaguiProvider>
   );
