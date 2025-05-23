@@ -26,15 +26,21 @@ interface TaekwondoTranslationsProps {
 const App = () => {
   const [taekwondoTranslations, setTaekwondoTranslations] = useState<TaekwondoTranslationsProps[]>([]);
   const [index, setIndex] = useState(0);
+  const [isKoreanPhoneticVisible, setIsKoreanPhoneticVisible] = useState(true);
   const client = generateClient<Schema>()
 
-  const handleSwipe = (direction: 'leftSwipe' | 'rightSwipe') => {
+  const handleHorizontalSwipe = (direction: 'leftSwipe' | 'rightSwipe') => {
     if (direction === 'leftSwipe') { 
       setIndex((prevIndex) => (prevIndex + 1) % taekwondoTranslations.length);
     } else if (direction === 'rightSwipe') {
       setIndex((prevIndex) => (prevIndex - 1 + taekwondoTranslations.length) % taekwondoTranslations.length);
     }
+    setIsKoreanPhoneticVisible(true);
   }
+
+  const handleVerticalSwipe = (direction: 'upSwipe' | 'downSwipe') => {
+    setIsKoreanPhoneticVisible((prev) => !prev);
+  }  
 
   useEffect (() => {
     const fetchData = async () => {
@@ -59,7 +65,20 @@ const App = () => {
   },[])
 
   return (
-    // <Authenticator.Provider>
+    <TamaguiProvider config={config}>
+      <GestureHandlerRootView style={styles.container}>
+        <FlashCard 
+          koreanPhonetic={taekwondoTranslations?.[index]?.korean} 
+          english={taekwondoTranslations?.[index]?.english} 
+          handleHorizontalSwipe={handleHorizontalSwipe} 
+          handleVerticalSwipe={handleVerticalSwipe} 
+          isKoreanPhonetic={isKoreanPhoneticVisible} />
+      </GestureHandlerRootView>
+    </TamaguiProvider>
+  );
+};
+
+// <Authenticator.Provider>
     //   <Authenticator>
     //     <TamaguiProvider config={config}>
     //       <View style={styles.container}>
@@ -69,13 +88,6 @@ const App = () => {
     //     </TamaguiProvider>
     //   </Authenticator>
     // </Authenticator.Provider>
-    <TamaguiProvider config={config}>
-          <GestureHandlerRootView style={styles.container}>
-            <FlashCard koreanPhonetic={taekwondoTranslations?.[index]?.korean} english={taekwondoTranslations?.[index]?.english} handleSwipe={handleSwipe} />
-          </GestureHandlerRootView>
-        </TamaguiProvider>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

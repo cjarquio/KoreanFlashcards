@@ -6,17 +6,39 @@ import { runOnJS } from 'react-native-reanimated';
 interface FlashCardProps {
   koreanPhonetic: string | null | undefined;
   english: string | null | undefined;
-  handleSwipe: (direction: 'leftSwipe' | 'rightSwipe') => void;
+  isKoreanPhonetic: boolean;
+  handleHorizontalSwipe: (direction: 'leftSwipe' | 'rightSwipe') => void;
+  handleVerticalSwipe: (direction: 'upSwipe' | 'downSwipe') => void;
 }
 
 export const FlashCard: React.FC<FlashCardProps> = (props: FlashCardProps) => {
-  const { koreanPhonetic, english, handleSwipe } = props;
+  const {
+    koreanPhonetic,
+    isKoreanPhonetic,
+    english,
+    handleHorizontalSwipe,
+    handleVerticalSwipe,
+  } = props;
 
   const panGesture = Gesture.Pan().onEnd((e) => {
-    if (e.velocityX > 50) {
-      runOnJS(handleSwipe)('rightSwipe');
-    } else if (e.velocityX < -50) {
-      runOnJS(handleSwipe)('leftSwipe');
+    if (e.velocityX > 50 && e.translationY < 50 && e.translationY > -50) {
+      runOnJS(handleHorizontalSwipe)('rightSwipe');
+    } else if (
+      e.velocityX < -50 &&
+      e.translationY < 50 &&
+      e.translationY > -50
+    ) {
+      runOnJS(handleHorizontalSwipe)('leftSwipe');
+    }
+
+    if (e.velocityY > 50 && e.translationX < 50 && e.translationX > -50) {
+      runOnJS(handleVerticalSwipe)('downSwipe');
+    } else if (
+      e.velocityY < -50 &&
+      e.translationX < 50 &&
+      e.translationX > -50
+    ) {
+      runOnJS(handleVerticalSwipe)('upSwipe');
     }
   });
 
@@ -25,10 +47,7 @@ export const FlashCard: React.FC<FlashCardProps> = (props: FlashCardProps) => {
       <Card style={styles.flashCard}>
         <YStack style={styles.flashCardTextContainer}>
           <Text fontSize="$12" adjustsFontSizeToFit>
-            {koreanPhonetic}
-          </Text>
-          <Text fontSize="$12" adjustsFontSizeToFit>
-            {english}
+            {isKoreanPhonetic ? koreanPhonetic : english}
           </Text>
         </YStack>
       </Card>
