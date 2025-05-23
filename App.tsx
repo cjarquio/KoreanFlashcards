@@ -65,29 +65,26 @@ const App = () => {
   },[])
 
   return (
-    <TamaguiProvider config={config}>
-      <GestureHandlerRootView style={styles.container}>
-        <FlashCard 
-          koreanPhonetic={taekwondoTranslations?.[index]?.korean} 
-          english={taekwondoTranslations?.[index]?.english} 
-          handleHorizontalSwipe={handleHorizontalSwipe} 
-          handleVerticalSwipe={handleVerticalSwipe} 
-          isKoreanPhonetic={isKoreanPhoneticVisible} />
-      </GestureHandlerRootView>
-    </TamaguiProvider>
+    <Authenticator.Provider>
+      <Authenticator>
+        <TamaguiProvider config={config}>
+          <SafeAreaView style={styles.container}>
+            <GestureHandlerRootView style={styles.container}>
+              <FlashCard
+                koreanPhonetic={taekwondoTranslations?.[index]?.korean}
+                english={taekwondoTranslations?.[index]?.english}
+                isKoreanPhonetic={isKoreanPhoneticVisible}
+                handleHorizontalSwipe={handleHorizontalSwipe}
+                handleVerticalSwipe={handleVerticalSwipe}
+              />
+            </GestureHandlerRootView>
+            <SignOutButton />
+          </SafeAreaView>
+        </TamaguiProvider>
+      </Authenticator>
+    </Authenticator.Provider>
   );
 };
-
-// <Authenticator.Provider>
-    //   <Authenticator>
-    //     <TamaguiProvider config={config}>
-    //       <View style={styles.container}>
-    //         <FlashCard koreanPhonetic={taekwondoTranslations?.[0]?.korean} english={taekwondoTranslations?.[0]?.english} />
-    //         <SignOutButton />
-    //       </View>
-    //     </TamaguiProvider>
-    //   </Authenticator>
-    // </Authenticator.Provider>
 
 const styles = StyleSheet.create({
   container: {
