@@ -21,22 +21,22 @@ export const FlashCard: React.FC<FlashCardProps> = (props: FlashCardProps) => {
   } = props;
 
   const panGesture = Gesture.Pan().onEnd((e) => {
-    if (e.velocityX > 50 && e.translationY < 50 && e.translationY > -50) {
+    if (e.velocityX > 50 && e.translationY < 80 && e.translationY > -80) {
       runOnJS(handleHorizontalSwipe)('rightSwipe');
     } else if (
       e.velocityX < -50 &&
-      e.translationY < 50 &&
-      e.translationY > -50
+      e.translationY < 80 &&
+      e.translationY > -80
     ) {
       runOnJS(handleHorizontalSwipe)('leftSwipe');
     }
 
-    if (e.velocityY > 50 && e.translationX < 50 && e.translationX > -50) {
+    if (e.velocityY > 50 && e.translationX < 80 && e.translationX > -80) {
       runOnJS(handleVerticalSwipe)('downSwipe');
     } else if (
       e.velocityY < -50 &&
-      e.translationX < 50 &&
-      e.translationX > -50
+      e.translationX < 80 &&
+      e.translationX > -80
     ) {
       runOnJS(handleVerticalSwipe)('upSwipe');
     }
