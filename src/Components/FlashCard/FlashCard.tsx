@@ -1,7 +1,12 @@
 import { Card, Text, YStack } from 'tamagui';
 import { StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { runOnJS } from 'react-native-reanimated';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 interface FlashCardProps {
   koreanPhonetic: string | null | undefined;
@@ -19,38 +24,77 @@ export const FlashCard: React.FC<FlashCardProps> = (props: FlashCardProps) => {
     handleHorizontalSwipe,
     handleVerticalSwipe,
   } = props;
+  const position = useSharedValue(0);
+  const scale = useSharedValue(1);
+  const END_POSITION = 0;
+  const minVelocity = 0;
+  const minTranslation = 80;
 
-  const panGesture = Gesture.Pan().onEnd((e) => {
-    if (e.velocityX > 50 && e.translationY < 80 && e.translationY > -80) {
-      runOnJS(handleHorizontalSwipe)('rightSwipe');
-    } else if (
-      e.velocityX < -50 &&
-      e.translationY < 80 &&
-      e.translationY > -80
-    ) {
-      runOnJS(handleHorizontalSwipe)('leftSwipe');
-    }
+  const panGesture = Gesture.Pan()
+    .onUpdate((e) => {
+      if (
+        e.velocityX < -minVelocity &&
+        e.translationY < minTranslation &&
+        e.translationY > -minTranslation
+      ) {
+        position.value = e.translationX;
+        scale.value = scale.value > 0 ? 1 + e.translationX / 100 : 0;
+      } else if (
+        e.velocityX > minVelocity &&
+        e.translationY < minTranslation &&
+        e.translationY > -minTranslation
+      ) {
+        position.value = END_POSITION + e.translationX;
+        scale.value = scale.value > 0 ? 1 - e.translationX / 100 : 0;
+      }
+    })
+    .onEnd((e) => {
+      if (
+        e.velocityX > minVelocity &&
+        e.translationY < minTranslation &&
+        e.translationY > -minTranslation
+      ) {
+        runOnJS(handleHorizontalSwipe)('rightSwipe');
+        position.value = withTiming(END_POSITION, { duration: 100 });
+        scale.value = 1;
+      } else if (
+        e.velocityX < -minVelocity &&
+        e.translationY < minTranslation &&
+        e.translationY > -minTranslation
+      ) {
+        position.value = withTiming(END_POSITION, { duration: 100 });
+        scale.value = 1;
+        runOnJS(handleHorizontalSwipe)('leftSwipe');
+      }
 
-    if (e.velocityY > 50 && e.translationX < 80 && e.translationX > -80) {
-      runOnJS(handleVerticalSwipe)('downSwipe');
-    } else if (
-      e.velocityY < -50 &&
-      e.translationX < 80 &&
-      e.translationX > -80
-    ) {
-      runOnJS(handleVerticalSwipe)('upSwipe');
-    }
-  });
+      if (
+        e.velocityY > minVelocity &&
+        e.translationX < minTranslation &&
+        e.translationX > -minTranslation
+      ) {
+        runOnJS(handleVerticalSwipe)('downSwipe');
+      } else if (
+        e.velocityY < -minVelocity &&
+        e.translationX < minTranslation &&
+        e.translationX > -minTranslation
+      ) {
+        runOnJS(handleVerticalSwipe)('upSwipe');
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: position.value }, { scale: scale.value }],
+  }));
 
   return (
     <GestureDetector gesture={panGesture}>
-      <Card style={styles.flashCard}>
-        <YStack style={styles.flashCardTextContainer}>
+      <Animated.View style={[styles.flashCard, animatedStyle]}>
+        <Card style={styles.flashCardTextContainer}>
           <Text fontSize="$12" adjustsFontSizeToFit>
             {isKoreanPhonetic ? koreanPhonetic : english}
           </Text>
-        </YStack>
-      </Card>
+        </Card>
+      </Animated.View>
     </GestureDetector>
   );
 };
